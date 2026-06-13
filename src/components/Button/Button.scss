@@ -1,0 +1,258 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-btn {
+    /* 1. MAP SCSS TOKENS TO CSS VARIABLES */
+    --btn-primary-bg: #{$primary-500};
+    --btn-primary-hover: #{$primary-600};  /* ĐÃ SỬA: Chuyển sang mốc 600 đậm hơn để đúng chuẩn Odoo Hover */
+    --btn-primary-active: #{$primary-700}; /* ĐÃ THÊM: Mốc 700 siêu đậm khi click chuột xuống */
+    --btn-default-border: #{$neutral-300};
+    --btn-default-hover-border: #{$primary-500};
+    --btn-text-color: #{$neutral-700};
+    --btn-disabled-bg: #{$neutral-100};
+    --btn-disabled-color: #{$neutral-400};
+
+    /* 2. BASE STYLES */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-family-base;
+    font-weight: $weight-regular;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    user-select: none;
+    border: 1px solid transparent;
+
+    .o-btn-icon-with-text {
+        margin-right: $space-100; 
+    }
+    
+    /* 3. SIZE VARIANTS */
+    &.o-btn-small {
+        height: 24px;
+        padding: 0 $space-200;
+        font-size: $small-font-size;
+    }
+    
+    &:not(.o-btn-small):not(.o-btn-large) { 
+        height: 32px;
+        padding: 0 $space-400;
+        font-size: $font-size-base;
+    }
+    
+    &.o-btn-large {
+        height: 40px;
+        padding: 0 $space-600;
+        font-size: $h4-font-size;
+    }
+
+    /* 4. TYPE VARIANTS */
+    &.o-btn-default {
+        background-color: #ffffff;
+        border-color: var(--btn-default-border);
+        color: var(--btn-text-color);
+        
+        &:hover:not(:disabled) {
+            color: var(--btn-default-hover-border);
+            border-color: var(--btn-default-hover-border);
+        }
+    }
+
+    &.o-btn-primary {
+        background-color: var(--btn-primary-bg);
+        border-color: var(--btn-primary-bg);
+        color: #ffffff;
+        
+        /* ĐÃ SỬA: Hover và Active hiệu ứng chìm/đậm chuẩn Odoo ERP */
+        &:hover:not(:disabled) {
+            background-color: var(--btn-primary-hover);
+            border-color: var(--btn-primary-hover);
+            color: #ffffff;
+        }
+        &:active:not(:disabled) {
+            background-color: var(--btn-primary-active);
+            border-color: var(--btn-primary-active);
+            color: #ffffff;
+        }
+    }
+
+    &.o-btn-dashed {
+        background-color: #ffffff;
+        border-color: var(--btn-default-border);
+        border-style: dashed;
+        color: var(--btn-text-color);
+        
+        &:hover:not(:disabled) {
+            color: var(--btn-default-hover-border);
+            border-color: var(--btn-default-hover-border);
+        }
+    }
+
+    &.o-btn-text {
+        background-color: transparent;
+        color: var(--btn-text-color);
+        
+        &:hover:not(:disabled) {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+    }
+
+    &.o-btn-link {
+        background-color: transparent;
+        color: var(--btn-primary-bg);
+        text-decoration: none;
+        
+        &:hover:not(:disabled) {
+            color: var(--btn-primary-active); /* Dùng mốc 700 để thấy rõ sự khác biệt */
+            text-decoration: underline; /* Hành vi bắt buộc của thẻ link */
+        }
+    }
+
+    /* 5. DISABLED STATE */
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+
+        &.o-btn-default, &.o-btn-dashed {
+            background-color: var(--btn-disabled-bg);
+            color: var(--btn-disabled-color);
+            border-color: var(--btn-default-border);
+        }
+        &.o-btn-primary {
+            background-color: var(--btn-disabled-bg);
+            border-color: var(--btn-default-border);
+            color: var(--btn-disabled-color);
+        }
+        &.o-btn-text, &.o-btn-link {
+            color: var(--btn-disabled-color);
+        }
+    }
+
+    /* 6. ICON ONLY BUTTON */
+    &.o-btn-icon-only {
+        width: 32px;
+        padding: 0;
+        &.o-btn-large { width: 40px; }
+        &.o-btn-small { width: 24px; }
+    }
+
+    /* 7. DANGER BUTTON */
+    &.o-btn-danger {
+        color: $error-500;
+        border-color: $error-500;
+        
+        &:hover:not(:disabled) {
+            color: $error-600;
+            border-color: $error-600;
+            background-color: rgba($error-500, 0.05);
+        }
+
+        &.o-btn-primary {
+            background-color: $error-500;
+            border-color: $error-500;
+            color: #ffffff;
+            
+            /* ĐÃ SỬA: Thêm màu chữ trắng cố định khi hover/active nút xóa chính */
+            &:hover:not(:disabled) {
+                background-color: $error-600;
+                border-color: $error-600;
+                color: #ffffff !important;
+            }
+            &:active:not(:disabled) {
+                background-color: $error-700;
+                border-color: $error-700;
+                color: #ffffff !important;
+            }
+        }
+    }
+
+    &.o-btn-ghost {
+        background-color: transparent !important;
+        &.o-btn-default, &.o-btn-dashed {
+            color: inherit;
+            border-color: inherit;
+            &:hover:not(:disabled) {
+                color: var(--btn-primary-bg);
+                border-color: var(--btn-primary-bg);
+            }
+        }
+    }
+
+    &.o-btn-block {
+        width: 100%;
+        display: flex;
+    }
+}
+
+/* 8. SMART STAT BUTTON BOX */
+.oe_button_box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: stretch;
+    width: 100%;
+    margin-bottom: $space-400;
+    
+    /* ĐÃ SỬA: Xóa border và background của thẻ cha để Box tự ôm khít nút */
+    border: none;
+    border-radius: 0;
+    background: transparent; 
+
+    .o-btn.o-btn-stat {
+        border: none;
+        /* ĐÃ SỬA: Trả lại viền trái cho TẤT CẢ các nút. Background hover sẽ chạm sát mí viền */
+        border-left: 1px solid var(--btn-default-border);
+        border-radius: 0;
+        margin: 0;
+        background-color: transparent;
+        
+        /* Bỏ quy tắc &:first-child { border-left: none; } cũ đi */
+
+        &:hover:not(:disabled), &:active:not(:disabled) {
+            background-color: #ffffff !important;
+        }
+    }
+}
+
+.o-btn.o-btn-stat {
+    color: var(--btn-text-color);
+    padding: $space-200 $space-300;
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    
+    height: 100%;
+    min-height: 48px; 
+    min-width: 145px;
+    transition: background-color 0.15s ease;
+
+    .o_button_icon {
+        font-size: 18px;
+        margin-right: $space-200;
+        color: var(--btn-primary-bg);
+        width: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .o_stat_info {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+
+        .o_stat_text {
+            font-size: 11px;
+            color: $neutral-600;
+            white-space: nowrap;
+        }
+
+        .o_stat_value {
+            font-weight: $weight-bold;
+            color: var(--btn-primary-bg);
+            font-size: 13px;
+        }
+    }
+}

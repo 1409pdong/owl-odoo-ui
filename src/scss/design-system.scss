@@ -12,7 +12,10 @@
 // 4. Nạp Bootstrap (Dùng các biến đã map ở trên)
 @import "bootstrap/scss/bootstrap";
 
-// 5. CUSTOM UTILITIES (Tiện ích tự viết)
+// 5. COMPONENTS
+@import "../components/Button/Button.scss";
+
+// CUSTOM UTILITIES (Tiện ích tự viết)
 .cursor-pointer {
     cursor: pointer;
 }
