@@ -1,0 +1,20 @@
+// _export_typography.module.scss
+@import "typography";
+
+:export {
+  fontFamilyBase: $font-family-base;
+  fontFamilyDisplay: $font-family-display;
+  fontFamilyMono: $font-family-mono;
+
+  weightRegular: $weight-regular;
+  weightMedium: $weight-medium;
+  weightSemibold: $weight-semibold;
+  weightBold: $weight-bold;
+
+  sizeDisplay: $text-display-size;
+  sizeHeading: $text-heading-size;
+  sizeTitle: $text-title-size;
+  sizeBody: $text-body-size;
+  sizeCaption: $text-caption-size;
+  sizeMono: $text-mono-size;
+}

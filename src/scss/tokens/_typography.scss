@@ -1,0 +1,20 @@
+//Typography
+
+// _typography.scss
+$font-family-base: 'Inter', sans-serif;
+$font-family-display: 'Poppins', sans-serif;
+$font-family-mono: 'Consolas', monospace;
+
+// Weights
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+
+// Typography Scale (Dựa theo ảnh thiết kế của bạn)
+$text-display-size: 40px; // Dùng cho tiêu đề lớn, trang chủ, banner
+$text-heading-size: 28px;  // Dùng cho tiêu đề chính của các trang, section lớn
+$text-title-size: 18px;   // Tiêu đề các khối Card/Section
+$text-body-size: 14px;    // Tiêu chuẩn vàng cho Data Table và nội dung chính
+$text-caption-size: 12px; // Phụ chú, timestamp, label phụ
+$text-mono-size: 12px;    // Code, mã chứng từ, số tài khoản

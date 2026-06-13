@@ -1,0 +1,27 @@
+//Quy định màu cho từng loại Component
+
+// Định nghĩa các Role cho Component
+$map-button-bg: $primary-500;
+$map-button-text: #ffffff;
+$map-input-border: $neutral-300;
+$map-input-focus: $primary-400;
+
+// Định nghĩa Typography Roles 
+$map-text-heading: (
+  family: $font-family-display,
+  weight: $weight-bold,
+  size: $text-title-size 
+);
+
+//Các map khác 
+$map-text-body: (
+  family: $font-family-base,
+  weight: $weight-regular,
+  size: $text-body-size
+);
+
+$map-text-caption: (
+  family: $font-family-base,
+  weight: $weight-medium,
+  size: $text-caption-size
+);

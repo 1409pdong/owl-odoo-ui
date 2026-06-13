@@ -1,0 +1,120 @@
+// Nơi map màu thô vào tính năng: SEMANTIC MAPPING = ALIAS COLLECTION
+@use "sass:math";
+
+// 1. PRIMARY (Màu thương hiệu / Hành động chính)
+$primary-50:  $purple-50;
+$primary-100: $purple-100;
+$primary-200: $purple-200;
+$primary-300: $purple-300;
+$primary-400: $purple-400;
+$primary-500: $purple-500; // Base
+$primary-600: $purple-600; // Hover
+$primary-700: $purple-700; // Active
+$primary-800: $purple-800;
+$primary-900: $purple-900;
+
+// 2. ERROR (Lỗi / Cảnh báo nguy hiểm / Xóa)
+$error-50:  $red-50;
+$error-100: $red-100;
+$error-200: $red-200;
+$error-300: $red-300;
+$error-400: $red-400;
+$error-500: $red-500; // Base
+$error-600: $red-600; // Hover
+$error-700: $red-700; // Active
+$error-800: $red-800;
+$error-900: $red-900;
+
+// 3. SUCCESS (Thành công / Hoàn thành / Lưu)
+$success-50:  $green-50;
+$success-100: $green-100;
+$success-200: $green-200;
+$success-300: $green-300;
+$success-400: $green-400;
+$success-500: $green-500; // Base
+$success-600: $green-600; // Hover
+$success-700: $green-700; // Active
+$success-800: $green-800;
+$success-900: $green-900;
+
+// 4. WARNING (Cảnh báo chú ý / Chờ xử lý)
+$warning-50:  $orange-50;
+$warning-100: $orange-100;
+$warning-200: $orange-200;
+$warning-300: $orange-300;
+$warning-400: $orange-400;
+$warning-500: $orange-500; // Base
+$warning-600: $orange-600; // Hover
+$warning-700: $orange-700; // Active
+$warning-800: $orange-800;
+$warning-900: $orange-900;
+
+// 5. INFO (Thông tin bổ sung / Trạng thái Neutral Active)
+$info-50:  $blue-50;
+$info-100: $blue-100;
+$info-200: $blue-200;
+$info-300: $blue-300;
+$info-400: $blue-400;
+$info-500: $blue-500; // Base
+$info-600: $blue-600; // Hover
+$info-700: $blue-700; // Active
+$info-800: $blue-800;
+$info-900: $blue-900;
+
+// 6. NEUTRAL (Nền, Khung viền, Text)
+$neutral-50:  $gray-50;  // Nền hệ thống
+$neutral-100: $gray-100; // Nền Card / Component
+$neutral-200: $gray-200; // Viền nhạt (Divider)
+$neutral-300: $gray-300; // Viền Input / Button Outline
+$neutral-400: $gray-400; // Icon / Text Disable
+$neutral-500: $gray-500; // Text phụ trợ (Muted)
+$neutral-600: $gray-600; // Text nội dung thứ cấp
+$neutral-700: $gray-700; // Text nội dung chính (Body)
+$neutral-800: $gray-800; // Tiêu đề (Heading)
+$neutral-900: $gray-900; // Text nhấn mạnh cực mạnh
+
+// SEMANTIC COLORS (Alias cho các vai trò cụ thể trong UI)
+$primary: $primary-500;
+$danger:  $error-500;
+$success: $success-500;
+$warning: $warning-500;
+$info:    $info-500;
+
+$body-bg: $neutral-50;
+$body-color: $neutral-700;
+
+// KẾT NỐI VỚI BOOTSTRAP LÕI (Mặc định dùng mốc 500)
+$primary: $primary-500;
+$danger:  $error-500;
+$success: $success-500;
+$warning: $warning-500;
+$info:    $info-500;
+
+$body-bg: $neutral-50;
+$body-color: $neutral-700;
+
+// TYPOGRAPHY
+$font-family-sans-serif: $font-family-base;
+$font-family-monospace: $font-family-mono;
+
+$font-size-base:   math.div($text-body-size, 16px) * 1rem; 
+$small-font-size:  math.div($text-caption-size, 16px) * 1rem;
+
+$h1-font-size:     math.div($text-display-size, 16px) * 1rem; 
+$h2-font-size:     math.div($text-heading-size, 16px) * 1rem; 
+$h3-font-size:     math.div($text-title-size, 16px) * 1rem;   
+$h4-font-size:     math.div($text-body-size, 16px) * 1rem;
+$h5-font-size:     math.div($text-body-size, 16px) * 1rem;
+$h6-font-size:     math.div($text-caption-size, 16px) * 1rem;
+
+$border-radius: $space-300;
+
+// SPACING SEMANTIC
+$spacers: (
+  0: $space-none,
+  1: $space-100, // 4px
+  2: $space-200, // 8px
+  3: $space-400, // 16px (Tiêu chuẩn)
+  4: $space-600, // 24px
+  5: $space-800  // 32px
+);

@@ -1,0 +1,18 @@
+// 1. BRAND COLLECTION (Base Tokens)
+@import "tokens/colors";
+@import "tokens/typography";
+@import "tokens/spacing";
+
+// 2. SEMANTIC MAPPING (Alias Tokens)
+@import "semantic";
+
+// 3. NẠP BOOTSTRAP LÕI
+@import "maps";
+
+// 4. Nạp Bootstrap (Dùng các biến đã map ở trên)
+@import "bootstrap/scss/bootstrap";
+
+// 5. CUSTOM UTILITIES (Tiện ích tự viết)
+.cursor-pointer {
+    cursor: pointer;
+}
