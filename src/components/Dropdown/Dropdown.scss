@@ -1,0 +1,93 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-dropdown {
+    position: relative;
+    display: inline-block;
+
+    .o-dropdown-trigger {
+        cursor: pointer;
+        display: inline-flex;
+    }
+
+    .o-dropdown-menu {
+        position: absolute;
+        top: calc(100% + #{$space-100}); /* Cách nút trigger 4px */
+        left: 0;
+        z-index: 1050; /* Chuẩn z-index popup của Odoo / Bootstrap */
+        min-width: 160px;
+        background-color: #ffffff;
+        border: 1px solid $neutral-200;
+        border-radius: $border-radius;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: $space-100 0;
+        display: flex;
+        flex-direction: column;
+
+        /* Nếu muốn Dropdown tự căn phải so với nút (placement = 'bottomRight') */
+        &.o-dropdown-placement-bottomRight {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    .o-dropdown-item {
+        padding: $space-200 $space-400;
+        display: flex;
+        align-items: center;
+        color: $neutral-700;
+        font-size: $text-body-size;
+        line-height: 1.5;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+        text-decoration: none;
+        user-select: none;
+
+        .o-dropdown-icon {
+            width: 20px;
+            text-align: center;
+            margin-right: $space-200;
+            font-size: 14px;
+            color: $neutral-500;
+        }
+
+        &:hover:not(.o-dropdown-item-disabled) {
+            background-color: $neutral-100;
+            color: $neutral-900;
+
+            .o-dropdown-icon {
+                color: $neutral-700;
+            }
+        }
+
+        &.o-dropdown-item-disabled {
+            color: $neutral-400;
+            cursor: not-allowed;
+            background-color: transparent;
+            
+            .o-dropdown-icon {
+                color: $neutral-400;
+            }
+        }
+
+        &.o-dropdown-item-danger {
+            color: $error-600;
+            
+            .o-dropdown-icon {
+                color: $error-500;
+            }
+            
+            &:hover:not(.o-dropdown-item-disabled) {
+                background-color: $error-50;
+                color: $error-700;
+            }
+        }
+    }
+
+    .o-dropdown-divider {
+        height: 1px;
+        background-color: $neutral-200;
+        margin: $space-100 0;
+    }
+}

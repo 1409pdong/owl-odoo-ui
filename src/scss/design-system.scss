@@ -14,6 +14,11 @@
 
 // 5. COMPONENTS
 @import "../components/Button/Button.scss";
+@import "../components/FloatButton/FloatButton.scss";
+@import "../components/Anchor/Anchor.scss";
+@import "../components/Breadcrumb/Breadcrumb.scss";
+@import "../components/Dropdown/Dropdown.scss";
+@import "../components/Menu/Menu.scss";
 
 // CUSTOM UTILITIES (Tiện ích tự viết)
 .cursor-pointer {

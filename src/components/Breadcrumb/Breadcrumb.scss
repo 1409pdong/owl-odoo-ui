@@ -1,0 +1,54 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-breadcrumb {
+    display: flex;
+    align-items: center;
+
+    .o-breadcrumb-list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .o-breadcrumb-item {
+        display: inline-flex;
+        align-items: center;
+        font-size: $text-title-size; // Odoo thường dùng cỡ chữ khá lớn (18px) cho Breadcrumb trên Control Panel
+        line-height: 1.5;
+
+        .o-breadcrumb-link {
+            color: $neutral-500;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+
+            &:hover {
+                color: $neutral-800; // Khi hover, text đậm lên thay vì chuyển màu primary
+                text-decoration: underline; // Odoo có thói quen gạch chân link khi hover
+            }
+        }
+
+        .o-breadcrumb-text {
+            color: $neutral-800;
+            font-weight: $weight-bold; // Item cuối cùng (Trang hiện tại) luôn là bold
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .o-breadcrumb-separator {
+            margin: 0 $space-200; // Khoảng cách 8px giữa các mục
+            color: $neutral-400;
+            font-size: $text-body-size; // Ký tự phân cách nhỏ hơn chữ một chút
+            user-select: none;
+            display: flex;
+            align-items: center;
+        }
+    }
+}

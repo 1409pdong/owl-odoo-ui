@@ -1,0 +1,261 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+@keyframes menuFadeDown {
+    0% { opacity: 0; transform: translateY(-8px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.o-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #ffffff;
+    color: $neutral-800;
+    font-family: $font-family-base;
+    font-size: $text-body-size;
+    line-height: 1.5;
+    transition: background 0.3s, width 0.3s;
+
+    ul { list-style: none; padding: 0; margin: 0; }
+
+    /* --- COMMON STYLES --- */
+    .o-menu-item, .o-menu-submenu-title {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.2s ease;
+        user-select: none;
+
+        .o-menu-title-content {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .o-menu-icon {
+            min-width: 24px;
+            text-align: center;
+            margin-right: $space-200;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+    }
+
+    .o-menu-item-disabled {
+        color: $neutral-400 !important;
+        cursor: not-allowed !important;
+        background-color: transparent !important;
+    }
+
+    .o-menu-item-group-title {
+        color: $neutral-500;
+        font-size: $text-caption-size;
+        text-transform: uppercase;
+        font-weight: $weight-bold;
+        padding: $space-300 $space-400 $space-100 $space-400;
+    }
+
+    .o-menu-item-divider {
+        height: 1px;
+        background-color: $neutral-200;
+        margin: $space-100 0;
+    }
+
+    /* --- INLINE MODE (Sidebar) --- */
+    &.o-menu-inline {
+        width: 100%;
+        border-right: 1px solid $neutral-200;
+        border-radius: $border-radius;
+
+        .o-menu-item, .o-menu-submenu-title {
+            padding: $space-200 $space-400;
+            margin: $space-100;
+            border-radius: $border-radius;
+
+            &:hover:not(.o-menu-item-disabled) {
+                color: $primary-600;
+                background-color: $neutral-100;
+            }
+        }
+
+        .o-menu-item-selected {
+            color: $primary-600;
+            background-color: $primary-50;
+            font-weight: $weight-semibold;
+            .o-menu-icon { color: $primary-600; }
+        }
+
+        .o-menu-submenu {
+            .o-menu-submenu-arrow {
+                font-size: 12px;
+                transition: transform 0.3s ease;
+            }
+            .o-menu-submenu-content {
+                display: none;
+                overflow: hidden;
+            }
+            &.o-menu-submenu-open {
+                > .o-menu-submenu-title {
+                    color: $primary-600;
+                    .o-menu-submenu-arrow { transform: rotate(180deg); }
+                }
+                > .o-menu-submenu-content { display: block; }
+            }
+        }
+
+        .o-menu-submenu-content {
+            .o-menu-item, .o-menu-submenu-title { padding-left: 48px; }
+            .o-menu-submenu-content .o-menu-item { padding-left: 64px; }
+        }
+        .o-menu-item-group-list .o-menu-item { padding-left: 32px; }
+    }
+
+    /* --- HORIZONTAL MODE (Top Navbar) --- */
+    &.o-menu-horizontal {
+        display: flex;
+        border-bottom: 1px solid $neutral-200;
+        line-height: 46px;
+
+        > .o-menu-item, > .o-menu-submenu {
+            padding: 0 $space-400;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            position: relative;
+
+            &:hover:not(.o-menu-item-disabled) {
+                color: $primary-600;
+                border-bottom-color: $primary-500;
+            }
+        }
+
+        > .o-menu-item-selected, > .o-menu-submenu.o-menu-submenu-open {
+            color: $primary-600;
+            border-bottom-color: $primary-500;
+            font-weight: $weight-semibold;
+        }
+
+        /* KHUNG MEGA DROPDOWN (CẤP 2) */
+        .o-menu-submenu-content {
+            position: absolute;
+            top: calc(100% + 4px); 
+            left: 0;
+            min-width: 240px; 
+            background: #ffffff;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12);
+            border-radius: $border-radius;
+            border: 1px solid $neutral-200;
+            padding: $space-100;
+            display: none; 
+            z-index: 1050;
+            
+            /* GỠ BỎ TẠI ĐÂY: Xóa max-height và overflow-y để không clip Flyout */
+
+            .o-menu-item, .o-menu-submenu-title {
+                padding: $space-200 $space-300;
+                line-height: 1.5;
+                margin-bottom: 2px;
+                border-radius: $space-200;
+                color: $neutral-700;
+                font-weight: $weight-regular;
+                
+                &:last-child { margin-bottom: 0; }
+                &:hover:not(.o-menu-item-disabled) {
+                    background-color: $neutral-100;
+                    color: $neutral-900;
+                }
+            }
+
+            .o-menu-item-group {
+                margin-top: $space-200;
+                &:first-child { margin-top: 0; }
+                .o-menu-item-group-title {
+                    padding: $space-100 $space-300;
+                    color: $neutral-500;
+                    font-size: 13px;
+                    font-weight: $weight-semibold;
+                    text-transform: none; 
+                }
+                .o-menu-item-group-list .o-menu-item {
+                    padding-left: $space-500; 
+                }
+            }
+
+            /* CẤP 3: FLY-OUT BÊN TRONG DROPDOWN (Hover) */
+            .o-menu-submenu-flyout {
+                position: relative;
+                
+                > .o-menu-submenu-content {
+                    top: -5px; 
+                    left: 100%; 
+                    margin-left: 4px;
+                }
+                
+                &:hover > .o-menu-submenu-content {
+                    display: block; 
+                    animation: menuFadeDown 0.2s ease-out forwards;
+                }
+            }
+        }
+
+        /* MODIFIER BỔ SUNG: Dành riêng cho Mega Menu muốn có thanh cuộn */
+        .o-menu-submenu.o-menu-submenu-scrollable > .o-menu-submenu-content {
+            max-height: 380px;
+            overflow-y: auto;
+            &::-webkit-scrollbar { width: 6px; }
+            &::-webkit-scrollbar-thumb { background-color: $neutral-300; border-radius: 4px; }
+            &::-webkit-scrollbar-track { background-color: transparent; }
+        }
+
+        > .o-menu-submenu.o-menu-submenu-open > .o-menu-submenu-content {
+            display: block; 
+            animation: menuFadeDown 0.2s ease-out forwards;
+        }
+    }
+
+    /* --- DARK THEME --- */
+    &.o-menu-dark {
+        background-color: $neutral-900;
+        color: rgba(255, 255, 255, 0.65);
+        border-right-color: transparent;
+
+        .o-menu-item, .o-menu-submenu-title {
+            &:hover:not(.o-menu-item-disabled) {
+                color: #ffffff;
+                background-color: transparent;
+            }
+        }
+
+        .o-menu-item-selected {
+            background-color: $primary-600;
+            color: #ffffff;
+            .o-menu-icon { color: #ffffff; }
+        }
+
+        .o-menu-submenu-open > .o-menu-submenu-title { color: #ffffff; }
+        .o-menu-item-group-title { color: rgba(255, 255, 255, 0.45); }
+        .o-menu-item-divider { background-color: rgba(255, 255, 255, 0.1); }
+
+        .o-menu-submenu-content {
+            background-color: #1f2937; 
+            border-color: #374151;
+
+            .o-menu-item, .o-menu-submenu-title {
+                color: rgba(255, 255, 255, 0.85);
+                &:hover:not(.o-menu-item-disabled) {
+                    background-color: #374151; 
+                    color: #ffffff;
+                }
+            }
+            .o-menu-item-group-title { color: rgba(255, 255, 255, 0.6); }
+        }
+
+        .o-menu-submenu.o-menu-submenu-scrollable > .o-menu-submenu-content {
+            &::-webkit-scrollbar-thumb { background-color: $neutral-600; }
+        }
+    }
+}

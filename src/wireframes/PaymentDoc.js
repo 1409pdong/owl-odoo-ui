@@ -1,11 +1,12 @@
 import { Component, xml } from "@odoo/owl";
 import { Button } from "../components/Button/Button.js";
+import { FloatButton } from "../components/FloatButton/FloatButton.js"; // ĐÃ THÊM: Nhập thành phần nổi
 
 export class PaymentDoc extends Component {
-    static components = { Button };
+    static components = { Button, FloatButton }; // ĐÃ THÊM: Đăng ký FloatButton
 
     static template = xml`
-        <div class="o_doc_container p-4 bg-light" style="min-height: 100vh;">
+        <div class="o_doc_container p-4 bg-light" style="min-height: 100vh; position: relative;">
             <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
                 <div>
                     <h2 class="fw-bold text-dark">Xác nhận Thanh toán</h2>
@@ -36,6 +37,11 @@ export class PaymentDoc extends Component {
                     </div>
                 </div>
             </div>
+
+            <FloatButton type="'primary'" icon="'fa-headphones'" isGroup="true" trigger="'hover'" placement="'top'" style="'bottom: 40px; right: 40px;'" tooltip="'Hỗ trợ chứng từ'">
+                <FloatButton icon="'fa-exclamation-circle'" type="'danger'" tooltip="'Báo cáo lỗi số liệu'"/>
+                <FloatButton icon="'fa-question'" tooltip="'Xem hướng dẫn quy trình'"/>
+            </FloatButton>
         </div>
     `;
 }

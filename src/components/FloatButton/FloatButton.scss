@@ -1,0 +1,131 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-float-btn {
+    position: fixed;
+    z-index: 1050;
+    width: 40px !important;
+    height: 40px !important;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    user-select: none;
+    background-color: #ffffff;
+    
+    /* CHUẨN HÓA ODOO SEMANTIC TOKENS */
+    border: 1px solid $neutral-300;          /* Dùng viền Outline chuẩn */
+    color: $body-color;                      /* Dùng màu chữ nội dung chính */
+    font-family: $font-family-sans-serif;    /* Kế thừa Inter từ hệ thống */
+
+    &.o-float-btn-circle {
+        border-radius: 50% !important;
+    }
+
+    &.o-float-btn-square {
+        border-radius: $space-200 !important; /* 8px tương ứng token space-200 */
+        height: auto !important;
+        min-height: 40px;
+        padding: $space-100 0;                /* 4px tương ứng space-100 */
+    }
+
+    .o-float-btn-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .o-float-btn-icon {
+        font-size: 18px; 
+        line-height: 1;
+    }
+
+    .o-float-btn-desc {
+        font-size: 9px;
+        font-weight: $weight-bold;
+        line-height: 1;
+        margin-top: 3px;
+        text-transform: uppercase;
+    }
+
+    /* TRẠNG THÁI TYPE THEO MAPPING TẠI SCSS/_SEMANTIC.SCSS */
+    &.o-float-btn-default:hover {
+        color: $primary;                     /* Ánh xạ về màu thương hiệu */
+        border-color: $primary-400;
+        background-color: $neutral-50;       /* Màu nền hệ thống nhạt */
+    }
+
+    &.o-float-btn-primary {
+        background-color: $primary;
+        border-color: $primary;
+        color: #ffffff;
+        &:hover {
+            background-color: $primary-600;  /* Hiệu ứng hover chìm chuẩn Odoo */
+            border-color: $primary-600;
+        }
+    }
+
+    &.o-float-btn-danger {
+        background-color: $danger;           /* Ánh xạ về lỗi/danger của hệ thống */
+        border-color: $danger;
+        color: #ffffff;
+        &:hover {
+            background-color: $error-600;
+        }
+    }
+
+    /* BADGE ĐỊNH VỊ CHUẨN XÁC KHÔNG BỊ VỠ DÒNG */
+    .o-float-btn-badge {
+        position: absolute !important;
+        top: -6px !important;
+        right: -6px !important;
+        background-color: $danger;
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: $weight-bold;
+        height: 18px;
+        min-width: 18px;
+        padding: 0 5px;
+        border-radius: 9px;
+        border: 1px solid #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        z-index: 5;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* MENU CHỨC NĂNG LỒNG NHAU (GROUP) */
+    .o-float-btn-menu {
+        position: absolute;
+        display: flex;
+        gap: $space-200;                     /* Cố định khoảng cách theo khe hở Tight */
+        z-index: 1000;
+        
+        &.o-float-btn-menu-top { bottom: 48px; flex-direction: column-reverse; }
+        &.o-float-btn-menu-bottom { top: 48px; flex-direction: column; }
+        &.o-float-btn-menu-left { right: 48px; flex-direction: row-reverse; }
+        &.o-float-btn-menu-right { left: 48px; flex-direction: row; }
+
+        .o-float-btn {
+            position: relative !important;
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+        }
+    }
+
+    &.o-float-btn-hidden {
+        opacity: 0;
+        transform: scale(0.7);
+        pointer-events: none;
+    }
+}

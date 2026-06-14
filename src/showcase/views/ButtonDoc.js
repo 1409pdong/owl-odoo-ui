@@ -33,7 +33,7 @@ export class ButtonDoc extends Component {
     static template = xml`
         <div class="o_doc_container py-3">
             <h1 class="fw-bold text-dark mb-2">Button Component</h1>
-            <p class="text-muted mb-4">Thành phần nút bấm kích hoạt thao tác. Thiết kế tuân thủ Odoo ERP Standard: Định hướng hành động và ngăn ngừa thao tác lỗi.</p>
+            <p class="text-muted mb-4">Thành phần nút bấm kích hoạt thao tác. Định hướng hành động và ngăn ngừa thao tác lỗi.</p>
 
             <h2 class="h5 text-uppercase fw-bold text-secondary border-bottom pb-2 mb-3">Core Button Types</h2>
 

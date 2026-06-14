@@ -3,11 +3,15 @@ import { ColorDoc } from "./views/ColorDoc.js";
 import { TypographyDoc } from "./views/TypographyDoc.js";
 import { SpacingDoc } from "./views/SpacingDoc.js";
 import { ButtonDoc } from "./views/ButtonDoc.js";
-
+import { FloatButtonDoc } from "./views/FloatButtonDoc.js";
+import { AnchorDoc } from "./views/AnchorDoc.js";
+import { BreadcrumbDoc } from "./views/BreadcrumbDoc.js";
+import { DropdownDoc } from "./views/DropdownDoc.js";
+import { MenuDoc } from "./views/MenuDoc.js";
 
 export class Showcase extends Component {
     // Đăng ký toàn bộ danh sách sub-pages vào OWL
-    static components = { ColorDoc, TypographyDoc, SpacingDoc, ButtonDoc };
+    static components = { ColorDoc, TypographyDoc, SpacingDoc, ButtonDoc, FloatButtonDoc, AnchorDoc, BreadcrumbDoc, DropdownDoc, MenuDoc };
 
     setup() {
         // Mặc định ban đầu khi mở web lên sẽ ở trang Color
@@ -71,6 +75,51 @@ export class Showcase extends Component {
                         </a>
                     </li>
 
+                    <!--FloatButton-->
+                    <li class="nav-item mb-1">
+                        <a class="nav-link cursor-pointer rounded py-2 small" 
+                           t-att-class="state.activePage === 'atom-float-button' ? 'active bg-light text-primary fw-bold' : 'text-dark'" 
+                           t-on-click="() => this.setPage('atom-float-button')">
+                            FloatButton
+                        </a>
+                    </li>
+
+                    <!--Anchor-->
+                    <li class="nav-item mb-1">
+                        <a class="nav-link cursor-pointer rounded py-2 small" 
+                           t-att-class="state.activePage === 'atom-anchor' ? 'active bg-light text-primary fw-bold' : 'text-dark'" 
+                           t-on-click="() => this.setPage('atom-anchor')">
+                            Anchor
+                        </a>
+                    </li>
+
+                    <!--Breadcrumb-->
+                    <li class="nav-item mb-1">
+                        <a class="nav-link cursor-pointer rounded py-2 small" 
+                           t-att-class="state.activePage === 'atom-breadcrumb' ? 'active bg-light text-primary fw-bold' : 'text-dark'" 
+                           t-on-click="() => this.setPage('atom-breadcrumb')">
+                            Breadcrumb
+                        </a>
+                    </li>
+
+                    <!--Dropdown-->
+                    <li class="nav-item mb-1">
+                        <a class="nav-link cursor-pointer rounded py-2 small" 
+                           t-att-class="state.activePage === 'atom-dropdown' ? 'active bg-light text-primary fw-bold' : 'text-dark'" 
+                           t-on-click="() => this.setPage('atom-dropdown')">
+                            Dropdown
+                        </a>
+                    </li>
+
+                    <!--Menu-->
+                    <li class="nav-item mb-1">
+                        <a class="nav-link cursor-pointer rounded py-2 small" 
+                           t-att-class="state.activePage === 'atom-menu' ? 'active bg-light text-primary fw-bold' : 'text-dark'" 
+                           t-on-click="() => this.setPage('atom-menu')">
+                            Menu
+                        </a>
+                    </li>
+
                     <!--Other Components-->
                     <li class="nav-item">
                         <a class="nav-link text-muted py-2 small" href="#">Khác (Sắp ra mắt)</a>
@@ -96,6 +145,26 @@ export class Showcase extends Component {
                     
                     <t t-if="state.activePage === 'atom-button'">
                         <ButtonDoc />
+                    </t>
+
+                    <t t-if="state.activePage === 'atom-float-button'">
+                        <FloatButtonDoc />
+                    </t>
+
+                    <t t-if="state.activePage === 'atom-anchor'">
+                        <AnchorDoc />
+                    </t>
+
+                    <t t-if="state.activePage === 'atom-breadcrumb'">
+                        <BreadcrumbDoc />
+                    </t>
+
+                    <t t-if="state.activePage === 'atom-dropdown'">
+                        <DropdownDoc />
+                    </t>
+
+                    <t t-if="state.activePage === 'atom-menu'">
+                        <MenuDoc />
                     </t>
 
                 </div>

@@ -1,0 +1,109 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-anchor {
+    position: relative;
+    padding-left: 2px;
+    
+    &.o-anchor-affix {
+        position: sticky;
+        top: $space-400; 
+    }
+
+    .o-anchor-ink {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: $neutral-200;
+        border-radius: $border-radius;
+    }
+
+    .o-anchor-link {
+        /* ĐÃ SỬA: Tăng padding dọc lên $space-200 (8px) và thụt đầu dòng $space-400 (16px) cho thoáng chuẩn Odoo */
+        padding: $space-200 0 $space-200 $space-400; 
+        line-height: 1.5; /* ĐÃ SỬA: Trả line-height về 1.5 cho dễ đọc */
+
+        .o-anchor-link-title {
+            color: $neutral-600;
+            font-size: $text-body-size;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &:hover {
+                color: $primary-500;
+            }
+        }
+
+        &.o-anchor-link-active {
+            > .o-anchor-link-title {
+                color: $primary-500;
+                font-weight: $weight-semibold;
+            }
+
+            position: relative;
+            &::before {
+                content: '';
+                position: absolute;
+                left: -2px;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background-color: $primary-500;
+                z-index: 1;
+            }
+        }
+        
+        // Cấp bậc con (Nested links)
+        .o-anchor-link {
+            padding-left: $space-400;
+            padding-top: $space-100; // Cấp con có thể hẹp lại 1 chút để tạo sự gắn kết với mục cha
+            padding-bottom: $space-100;
+            
+            .o-anchor-link-title {
+                font-size: $text-caption-size;
+            }
+            
+            &.o-anchor-link-active::before {
+                /* Tính toán bù trừ margin do padding-left của thẻ cha đã nới ra 16px */
+                left: -18px; 
+            }
+        }
+    }
+
+    /* Phiên bản ngang (Horizontal) */
+    &.o-anchor-horizontal {
+        padding-left: 0;
+
+        .o-anchor-ink {
+            display: none; // Ẩn vạch dọc
+        }
+        
+        .o-anchor-list {
+            display: flex;
+            gap: $space-400;
+            border-bottom: 1px solid $neutral-200;
+        }
+        
+        .o-anchor-link {
+            padding: $space-200 0;
+            
+            &.o-anchor-link-active {
+                &::before {
+                    left: 0;
+                    right: 0;
+                    bottom: -1px;
+                    top: auto;
+                    width: 100%;
+                    height: 2px;
+                }
+            }
+        }
+    }
+}
