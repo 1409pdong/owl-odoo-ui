@@ -1,0 +1,289 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-tabs {
+    display: flex;
+    flex-direction: column;
+    color: $neutral-800;
+    font-family: $font-family-base;
+    font-size: $text-body-size;
+
+    /* --- NAV BAR --- */
+    .o-tabs-nav {
+        position: relative;
+        display: flex;
+        flex: none;
+        align-items: center; /* Căn giữa theo chiều dọc các item (Tab và Nút Action) */
+        
+        /* Dòng gạch chân xám chạy ngang */
+        &::before {
+            position: absolute;
+            content: '';
+            z-index: 0;
+        }
+    }
+
+    /* --- PLACEMENTS --- */
+    &.o-tabs-top {
+        flex-direction: column;
+        .o-tabs-nav { 
+            margin-bottom: $space-400; 
+            &::before {
+                right: 0;
+                left: 0;
+                bottom: 0; /* FIX 1: Ép dòng border xuống sát đáy container thay vì lơ lửng */
+                border-bottom: 1px solid $neutral-200;
+            }
+        }
+        .o-tabs-ink-bar { bottom: 0; height: 2px; }
+    }
+    
+    &.o-tabs-bottom {
+        flex-direction: column-reverse;
+        .o-tabs-nav { 
+            margin-top: $space-400; 
+            &::before {
+                right: 0;
+                left: 0;
+                top: 0; /* Bo border lên đỉnh */
+                border-top: 1px solid $neutral-200;
+            }
+        }
+        .o-tabs-ink-bar { top: 0; height: 2px; }
+    }
+
+    &.o-tabs-start {
+        flex-direction: row;
+        .o-tabs-nav { 
+            margin-right: $space-600; 
+            flex-direction: column; 
+            &::before {
+                top: 0;
+                bottom: 0;
+                right: 0;
+                border-right: 1px solid $neutral-200;
+            }
+        }
+        .o-tabs-nav-list { flex-direction: column; }
+        .o-tabs-ink-bar { right: 0; width: 2px; }
+    }
+
+    &.o-tabs-end {
+        flex-direction: row-reverse;
+        .o-tabs-nav { 
+            margin-left: $space-600; 
+            flex-direction: column; 
+            &::before {
+                top: 0;
+                bottom: 0;
+                left: 0;
+                border-left: 1px solid $neutral-200;
+            }
+        }
+        .o-tabs-nav-list { flex-direction: column; }
+        .o-tabs-ink-bar { left: 0; width: 2px; }
+    }
+
+    /* --- WRAP & LIST --- */
+    .o-tabs-nav-wrap {
+        position: relative;
+        display: flex;
+        flex: auto;
+        align-self: stretch;
+        overflow: hidden;
+        white-space: nowrap;
+        z-index: 1; /* Nổi lên trên đường gạch ::before */
+    }
+
+    .o-tabs-nav-list {
+        position: relative;
+        display: flex;
+        transition: transform 0.3s;
+    }
+
+    /* FIX 2: Căn giữa Tabs khi có class centered */
+    &.o-tabs-centered {
+        .o-tabs-nav-wrap {
+            justify-content: center; /* Push danh sách Tab vào giữa vùng trống */
+        }
+        .o-tabs-nav-list {
+            flex: none; /* Không cho List giãn ra để đảm bảo box chữ nằm sát nhau */
+        }
+    }
+
+    /* --- TAB ITEM --- */
+    .o-tabs-tab {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: $space-300 0;
+        margin: 0 $space-500 0 0;
+        color: $neutral-800;
+        font-size: $text-body-size;
+        background: transparent;
+        border: 0;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+            color: $primary-500;
+        }
+
+        &.o-tabs-tab-active {
+            color: $primary-600;
+            font-weight: $weight-semibold;
+        }
+
+        &.o-tabs-tab-disabled {
+            color: $neutral-400;
+            cursor: not-allowed;
+            &:hover { color: $neutral-400; }
+        }
+
+        .o-tabs-tab-btn {
+            display: flex;
+            align-items: center;
+            outline: none;
+        }
+
+        .o-tabs-tab-icon {
+            margin-right: $space-200;
+        }
+
+        .o-tabs-tab-remove {
+            margin-left: $space-200;
+            color: $neutral-500;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+            
+            &:hover {
+                color: $neutral-800;
+                background-color: $neutral-200;
+            }
+        }
+    }
+
+    &.o-tabs-start .o-tabs-tab,
+    &.o-tabs-end .o-tabs-tab {
+        margin: 0 0 $space-400 0;
+        padding: $space-200 $space-400;
+    }
+
+    /* --- LINE TYPE INK BAR --- */
+    .o-tabs-ink-bar {
+        position: absolute;
+        background: $primary-500;
+        pointer-events: none;
+        z-index: 2;
+    }
+    .o-tabs-ink-bar-animated {
+        transition: width 0.3s, left 0.3s, right 0.3s, top 0.3s, bottom 0.3s, height 0.3s;
+    }
+
+    /* --- CARD & EDITABLE CARD TYPE --- */
+    &.o-tabs-card, &.o-tabs-editable-card {
+        .o-tabs-nav::before { display: none; } /* Ẩn line dưới khi dùng Card */
+        
+        .o-tabs-nav {
+            background-color: $neutral-50;
+            padding-top: $space-100;
+            border-bottom: 1px solid $neutral-200;
+            border-radius: $border-radius $border-radius 0 0;
+        }
+        
+        .o-tabs-tab {
+            margin: 0 $space-100 0 0;
+            padding: $space-200 $space-400;
+            background: #fdfdfd;
+            border: 1px solid $neutral-200;
+            border-bottom: 0;
+            border-radius: $border-radius $border-radius 0 0;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+            &.o-tabs-tab-active {
+                background: #ffffff;
+                color: $primary-600;
+                border-bottom-color: #ffffff;
+                
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -1px;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: #ffffff;
+                    z-index: 1;
+                }
+            }
+        }
+
+        .o-tabs-nav-add {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            margin-left: $space-100;
+            padding: 0 $space-300;
+            background: #fdfdfd;
+            border: 1px solid $neutral-200;
+            border-bottom: 0;
+            border-radius: $border-radius $border-radius 0 0;
+            cursor: pointer;
+            color: $neutral-600;
+            transition: all 0.3s;
+
+            &:hover {
+                color: $primary-500;
+            }
+        }
+    }
+
+    /* --- SIZES --- */
+    &.o-tabs-large {
+        .o-tabs-tab { font-size: $text-title-size; padding: $space-400 0; }
+        &.o-tabs-card .o-tabs-tab, &.o-tabs-editable-card .o-tabs-tab { padding: $space-300 $space-400; }
+    }
+    &.o-tabs-small {
+        .o-tabs-tab { font-size: $text-caption-size; padding: $space-200 0; }
+        &.o-tabs-card .o-tabs-tab, &.o-tabs-editable-card .o-tabs-tab { padding: $space-100 $space-300; }
+    }
+
+    /* --- CONTENT --- */
+    .o-tabs-content-holder {
+        flex: auto;
+        min-width: 0;
+        min-height: 0;
+    }
+    .o-tabs-content {
+        display: flex;
+        width: 100%;
+    }
+    .o-tabs-tabpane {
+        flex: none;
+        width: 100%;
+        outline: none;
+    }
+
+    /* --- EXTRA CONTENT ALIGNMENT --- */
+    /* Đảm bảo Button/Action ở 2 lề được căn giữa chiều dọc khít với cụm Tabs */
+    .o-tabs-extra-content-left { 
+        margin-right: $space-400; 
+        display: flex; 
+        align-items: center; 
+    }
+    .o-tabs-extra-content-right { 
+        margin-left: auto; 
+        padding-left: $space-400; 
+        display: flex; 
+        align-items: center; 
+    }
+}

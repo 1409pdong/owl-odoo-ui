@@ -1,0 +1,112 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-table-wrapper {
+    position: relative;
+    background: #ffffff;
+    border-radius: $border-radius;
+    overflow: hidden; // Tránh tràn border radius
+    
+    // Default Style Odoo: Không có viền dọc, chỉ có viền chân
+    border-bottom: 1px solid $neutral-200;
+
+    &.o-table-bordered {
+        border: 1px solid $neutral-200;
+        
+        .o-table-cell {
+            border-right: 1px solid $neutral-200;
+            &:last-child {
+                border-right: none;
+            }
+        }
+    }
+
+    .o-table-loading-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.o-table {
+    width: 100%;
+    margin-bottom: 0;
+    color: $neutral-700;
+    font-size: $text-body-size;
+    border-collapse: collapse;
+
+    .o-table-thead > tr > th {
+        background-color: $neutral-50;
+        color: $neutral-800;
+        font-weight: $weight-semibold;
+        text-transform: uppercase;
+        font-size: $text-caption-size; // Odoo Header thường nhỏ hơn 1 chút
+        padding: $space-300 $space-400;
+        border-bottom: 1px solid $neutral-300;
+        white-space: nowrap;
+        transition: background 0.2s;
+
+        &.o-table-cell-sortable {
+            cursor: pointer;
+            &:hover {
+                background-color: $neutral-100;
+            }
+        }
+
+        .o-table-sort-icon {
+            font-size: 10px;
+            color: $neutral-400;
+        }
+    }
+
+    .o-table-tbody > tr {
+        transition: background 0.2s;
+        border-bottom: 1px solid $neutral-200;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        > td {
+            padding: $space-300 $space-400;
+            vertical-align: middle;
+        }
+
+        &.o-table-row-selected {
+            background-color: $primary-50 !important; // Nền tím nhạt khi được chọn
+        }
+    }
+
+    // Variants
+    &.o-table-hover .o-table-tbody > tr:hover {
+        background-color: $neutral-50;
+    }
+
+    &.o-table-striped .o-table-tbody > tr:nth-of-type(odd) {
+        background-color: rgba($neutral-100, 0.3);
+    }
+
+    // Checkbox Odoo Customization
+    .o-table-cell-selection {
+        width: 48px;
+        padding-left: $space-400;
+        padding-right: $space-200;
+        
+        .o-checkbox {
+            cursor: pointer;
+            border-color: $neutral-400;
+            &:checked {
+                background-color: $primary-500;
+                border-color: $primary-500;
+            }
+            &:focus {
+                box-shadow: 0 0 0 0.2rem rgba($primary-500, 0.25);
+            }
+        }
+    }
+}

@@ -1,0 +1,191 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-picker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid $neutral-300;
+    border-radius: $border-radius;
+    transition: all 0.2s;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover:not(.o-picker-disabled) { border-color: $primary-500; }
+
+    &.o-picker-focused {
+        border-color: $primary-500;
+        box-shadow: 0 0 0 2px rgba(113, 75, 103, 0.1);
+    }
+
+    &.o-picker-disabled {
+        background-color: $neutral-100;
+        cursor: not-allowed;
+        color: $neutral-400;
+        input { cursor: not-allowed; color: $neutral-400; }
+    }
+
+    /* --- SIZES --- */
+    &.o-picker-small { padding: 0 $space-200; height: 24px; font-size: $text-caption-size; }
+    &.o-picker-medium { padding: $space-100 $space-300; height: 32px; font-size: $text-body-size; }
+    &.o-picker-large { padding: $space-200 $space-300; height: 40px; font-size: $text-title-size; }
+
+    /* --- VARIANTS --- */
+    &.o-picker-borderless { border-color: transparent !important; box-shadow: none !important; background-color: transparent; }
+    &.o-picker-filled { background-color: $neutral-100; border-color: transparent; &:hover { background-color: $neutral-200; } &.o-picker-focused { background-color: #ffffff; border-color: $primary-500; } }
+    &.o-picker-underlined { border-radius: 0; border-top: 0; border-left: 0; border-right: 0; border-bottom: 1px solid $neutral-300; &:hover { border-bottom-color: $primary-500; } }
+
+    .o-picker-input {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        input {
+            flex: auto;
+            min-width: 0;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            outline: none;
+            background: transparent;
+            color: $neutral-700;
+            font-family: inherit;
+            font-size: inherit;
+            cursor: inherit;
+            &::placeholder { color: $neutral-400; }
+        }
+    }
+
+    .o-picker-prefix { margin-right: $space-200; color: $neutral-400; display: flex; align-items: center; }
+    .o-picker-suffix, .o-picker-clear { flex: none; margin-left: $space-200; color: $neutral-400; display: flex; align-items: center; transition: color 0.2s; }
+    .o-picker-clear {
+        display: none;
+        background: #fff;
+        cursor: pointer;
+        &:hover { color: $neutral-600; }
+    }
+    
+    &:hover .o-picker-clear.show {
+        display: flex;
+        + .o-picker-suffix { display: none; }
+    }
+}
+
+/* Range Picker Layout */
+.o-picker-range {
+    .o-picker-input { width: 45%; text-align: center; }
+    .o-picker-input > input { text-align: center; }
+    .o-picker-range-separator { padding: 0 $space-200; color: $neutral-400; display: flex; align-items: center; }
+}
+
+/* Dropdown Calendar Panel */
+.o-picker-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 1050;
+    background-color: #ffffff;
+    border-radius: $border-radius;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12);
+    font-family: $font-family-base;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+
+    &.o-picker-placement-bottomRight { left: auto; right: 0; }
+
+    .o-picker-panel-container { display: flex; }
+    
+    /* PRESETS SIDEBAR */
+    .o-picker-presets {
+        width: 120px;
+        border-right: 1px solid $neutral-200;
+        padding: $space-200 0;
+        background-color: $neutral-50;
+        border-radius: $border-radius 0 0 $border-radius;
+        ul {
+            list-style: none; padding: 0; margin: 0;
+            li {
+                padding: $space-100 $space-300;
+                font-size: 13px;
+                color: $neutral-700;
+                cursor: pointer;
+                transition: background 0.2s;
+                &:hover { background-color: $neutral-200; color: $primary-600; }
+            }
+        }
+    }
+
+    .o-picker-panel { padding: $space-200; width: 280px; }
+
+    .o-picker-header {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 0 $space-100 $space-200; border-bottom: 1px solid $neutral-200; margin-bottom: $space-200;
+        .o-picker-header-view { font-weight: $weight-bold; color: $neutral-800; }
+        button {
+            background: transparent; border: 0; cursor: pointer; color: $neutral-500; padding: 4px 8px; border-radius: 4px;
+            &:hover { background: $neutral-100; color: $neutral-800; }
+        }
+    }
+
+    .o-picker-content {
+        width: 100%; border-collapse: collapse;
+        th { padding: 4px 0; color: $neutral-500; font-weight: $weight-medium; font-size: 13px; text-align: center; }
+        td {
+            padding: 3px 0; text-align: center; cursor: pointer; position: relative;
+
+            &.o-picker-cell-in-range::before {
+                content: ''; position: absolute; top: 50%; left: 0; right: 0;
+                transform: translateY(-50%); height: 24px; background-color: $primary-50; z-index: 0;
+            }
+            &.o-picker-cell-range-start::before { left: 50%; }
+            &.o-picker-cell-range-end::before { right: 50%; }
+
+            .o-picker-cell-inner {
+                position: relative; z-index: 1; display: inline-block; width: 24px; height: 24px;
+                line-height: 24px; border-radius: $border-radius; color: $neutral-700; font-size: 14px; transition: all 0.2s;
+            }
+
+            &:hover:not(.o-picker-cell-disabled) .o-picker-cell-inner { background-color: $neutral-100; }
+
+            &.o-picker-cell-selected .o-picker-cell-inner { background-color: $primary-500; color: #ffffff; font-weight: $weight-semibold; }
+            &.o-picker-cell-today .o-picker-cell-inner { border: 1px solid $primary-500; }
+            &.o-picker-cell-out-view .o-picker-cell-inner { color: $neutral-300; }
+            
+            /* TRẠNG THÁI DISABLED */
+            &.o-picker-cell-disabled {
+                cursor: not-allowed;
+                .o-picker-cell-inner { color: $neutral-300; background: transparent; }
+                &::before { display: none; } /* Ẩn nền range nếu bị disabled */
+                &:hover .o-picker-cell-inner { background: transparent; }
+            }
+        }
+    }
+
+    .o-picker-time-panel {
+        width: 120px; border-left: 1px solid $neutral-200; display: flex;
+        .o-picker-time-column {
+            flex: 1; height: 280px; overflow-y: auto; overflow-x: hidden; border-right: 1px solid $neutral-100;
+            &::-webkit-scrollbar { width: 4px; }
+            &::-webkit-scrollbar-thumb { background: $neutral-300; border-radius: 4px; }
+            ul {
+                list-style: none; margin: 0; padding: 0;
+                li {
+                    padding: 4px 0; text-align: center; font-size: 14px; color: $neutral-700; cursor: pointer;
+                    &:hover { background: $neutral-100; }
+                    &.o-picker-time-cell-selected { background: $primary-50; color: $primary-600; font-weight: $weight-semibold; }
+                }
+            }
+        }
+    }
+    
+    .o-picker-footer {
+        border-top: 1px solid $neutral-200; padding: $space-200; display: flex; justify-content: space-between; align-items: center;
+        .o-picker-footer-extra { flex: 1; font-size: 12px; color: $neutral-500; }
+        a { color: $primary-500; text-decoration: none; font-size: 13px; font-weight: $weight-medium; }
+    }
+}

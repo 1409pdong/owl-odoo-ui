@@ -162,16 +162,13 @@ export class Menu extends Component {
         
         if (this.props.mode === 'horizontal') {
             if (level === 1) {
-                // Đóng mở độc quyền cấp 1
                 if (index > -1) {
                     this.state.openKeys = []; 
                 } else {
                     this.state.openKeys = [key]; 
                 }
             }
-            // Nếu là level 2 trong chế độ Horizontal, bỏ qua thao tác Click vì CSS :hover sẽ xử lý Flyout
         } else {
-            // Chế độ Inline: Mở Accordion cho mọi cấp
             if (index > -1) {
                 this.state.openKeys.splice(index, 1);
             } else {
@@ -187,7 +184,7 @@ export class Menu extends Component {
         this.state.selectedKey = item.key;
         
         if (this.props.mode === 'horizontal') {
-            this.state.openKeys = []; // Tự động đóng dropdown
+            this.state.openKeys = []; 
         }
 
         if (this.props.onSelect) {

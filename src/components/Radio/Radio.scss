@@ -1,0 +1,190 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+/* ========================================================
+   STANDARD RADIO (Hình tròn mặc định)
+======================================================== */
+.o-radio-wrapper {
+    position: relative; /* BUG FIX 1: Giữ thẻ input absolute không trào ra ngoài */
+    display: inline-flex;
+    align-items: center; /* BUG FIX 2: Căn giữa hoàn hảo với text */
+    cursor: pointer;
+    margin-right: $space-400; 
+    font-family: $font-family-base;
+    font-size: $text-body-size;
+    color: $neutral-800;
+    line-height: 1.5;
+    transition: all 0.2s;
+    
+    &.o-radio-wrapper-disabled {
+        cursor: not-allowed;
+        color: $neutral-400;
+    }
+
+    .o-radio {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0; /* BUG FIX 3: Tránh méo hình tròn khi text quá dài */
+        outline: none;
+        margin-right: $space-200;
+    }
+
+    .o-radio-input {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        opacity: 0;
+    }
+
+    .o-radio-inner {
+        position: relative;
+        display: block;
+        width: 16px;
+        height: 16px;
+        background-color: #fff;
+        border: 1px solid $neutral-300;
+        border-radius: 50%;
+        transition: all 0.2s;
+
+        /* Dấu chấm tròn ở giữa */
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background-color: $primary-500;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+        }
+    }
+    
+    &:hover:not(.o-radio-wrapper-disabled) .o-radio-inner {
+        border-color: $primary-500;
+    }
+
+    &.o-radio-wrapper-checked {
+        .o-radio-inner {
+            border-color: $primary-500;
+            &::after { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+    }
+    
+    &.o-radio-wrapper-disabled {
+        .o-radio-input { cursor: not-allowed; }
+        .o-radio-inner {
+            background-color: $neutral-100;
+            border-color: $neutral-200;
+            &::after { background-color: $neutral-400; }
+        }
+    }
+}
+
+/* ========================================================
+   RADIO GROUP & LAYOUT
+======================================================== */
+.o-radio-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: $space-200 $space-400; /* Chuyển quản lý khoảng cách bằng Grid Gap */
+    
+    .o-radio-wrapper {
+        margin-right: 0; /* Reset margin vì đã dùng gap */
+    }
+
+    &.o-radio-group-vertical {
+        flex-direction: column;
+        gap: $space-200 0;
+    }
+}
+
+/* ========================================================
+   RADIO BUTTONS (Dạng Button Group dính liền)
+======================================================== */
+.o-radio-group-button {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0; /* BUG FIX 4: Reset gap để các nút dính vào nhau */
+    
+    .o-radio-button-wrapper {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0 $space-300;
+        height: 32px;
+        background: #ffffff;
+        border: 1px solid $neutral-300;
+        border-left-width: 0;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: $neutral-800;
+        font-family: $font-family-base;
+        font-size: $text-body-size;
+        
+        .o-radio-input {
+            position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; cursor: pointer; opacity: 0;
+        }
+        
+        /* Cạnh bo tròn của Group */
+        &:first-child {
+            border-left-width: 1px;
+            border-radius: $border-radius 0 0 $border-radius;
+        }
+        &:last-child {
+            border-radius: 0 $border-radius $border-radius 0;
+        }
+        
+        &:hover:not(.o-radio-button-disabled) { color: $primary-500; }
+        
+        &.o-radio-button-checked {
+            z-index: 1;
+            color: $primary-600;
+            border-color: $primary-500;
+            background: #ffffff;
+
+            /* Ghi đè đường viền trái cho Tab đang active */
+            &::before {
+                content: ""; position: absolute; top: -1px; left: -1px; bottom: -1px; width: 1px;
+                background-color: $primary-500;
+            }
+            
+            /* BUG FIX 5: Xóa nét đứt (Double Border) nếu là thẻ đầu tiên */
+            &:first-child {
+                border-left-color: $primary-500;
+                &::before { display: none; } 
+            }
+        }
+        
+        &.o-radio-button-disabled {
+            color: $neutral-400; background-color: $neutral-100; cursor: not-allowed;
+            &.o-radio-button-checked { background-color: $neutral-200; border-color: $neutral-300; color: $neutral-500; }
+        }
+    }
+    
+    /* VARIANT: SOLID BUTTON */
+    &.o-radio-group-solid {
+        .o-radio-button-checked:not(.o-radio-button-disabled) {
+            background: $primary-500;
+            border-color: $primary-500;
+            color: #ffffff;
+            &::before { background-color: $primary-500; }
+            &:first-child { border-left-color: $primary-500; }
+        }
+    }
+
+    /* KÍCH THƯỚC (SIZES) */
+    &.o-radio-group-large .o-radio-button-wrapper { height: 40px; font-size: $text-title-size; padding: 0 $space-400; }
+    &.o-radio-group-small .o-radio-button-wrapper { height: 24px; font-size: $text-caption-size; padding: 0 $space-200; }
+}

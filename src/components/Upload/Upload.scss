@@ -1,0 +1,216 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+/* ========================================================
+   CORE ODOO UPLOAD BOX
+======================================================== */
+.o-upload-container {
+    font-family: $font-family-base;
+    font-size: $text-body-size;
+    color: $neutral-800;
+    width: 100%;
+    box-sizing: border-box;
+
+    &.o-upload-disabled {
+        .o-upload {
+            background-color: $neutral-100 !important;
+            border-color: $neutral-200 !important;
+            cursor: not-allowed;
+            &:hover { border-color: $neutral-200; }
+        }
+        .o-upload-text, .o-upload-hint { color: $neutral-400 !important; }
+        .o-upload-remove-btn { display: none !important; }
+    }
+}
+
+/* --- DRAG & DROP ZONE (DROPZONE) --- */
+.o-upload-drag {
+    position: relative;
+    width: 100%;
+    padding: $space-500 $space-400;
+    text-align: center;
+    background: $neutral-50;
+    border: 1px dashed $neutral-300;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    box-sizing: border-box;
+
+    &:hover {
+        border-color: $primary-500;
+        background: rgba(113, 75, 103, 0.02); /* Tint màu Primary nhẹ */
+    }
+
+    &.o-upload-drag-hover {
+        border-color: $primary-600;
+        background: rgba(113, 75, 103, 0.05);
+    }
+
+    .o-upload-drag-icon {
+        margin-bottom: $space-200;
+        color: $primary-500;
+    }
+}
+
+/* --- PICTURE CARD SHAPE (LƯỚI THẺ ẢNH M2M) --- */
+.o-upload-picture-card {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 104px;
+    height: 104px;
+    background-color: $neutral-50;
+    border: 1px dashed $neutral-300;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    vertical-align: top;
+    box-sizing: border-box;
+
+    &:hover {
+        border-color: $primary-500;
+        background-color: #ffffff;
+    }
+}
+
+/* ========================================================
+   FILE LISTS & HOVER OVERLAY
+======================================================== */
+.o-upload-list {
+    margin-top: $space-300;
+    display: flex;
+    flex-direction: column;
+    gap: $space-200;
+
+    .o-upload-list-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $space-100 $space-200;
+        border-radius: $border-radius;
+        transition: background-color 0.2s;
+        min-height: 32px;
+        box-sizing: border-box;
+
+        &:hover {
+            background-color: $neutral-100;
+            .o-upload-remove-btn { opacity: 1; }
+        }
+
+        .o-upload-item-info {
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            flex: 1;
+            
+            .o-upload-item-icon {
+                margin-right: $space-200;
+                font-size: 14px;
+                flex-shrink: 0;
+            }
+            
+            .o-upload-item-name {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: $neutral-700;
+            }
+        }
+
+        .o-upload-remove-btn {
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            &:hover { color: $error-500 !important; background-color: $neutral-200; }
+        }
+
+        /* Dải thanh tiến trình Line */
+        .o-upload-progress-line {
+            position: absolute;
+            bottom: 0;
+            left: $space-200;
+            right: $space-200;
+            height: 2px;
+            background-color: $neutral-200;
+            
+            .o-upload-progress-bar {
+                height: 100%;
+                background-color: $primary-500;
+                transition: width 0.3s ease;
+            }
+        }
+    }
+}
+
+/* THUỘC TÍNH RIÊNG CHO PICTURE CARD GRID LIST */
+.o-upload-list-picture-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $space-200;
+    display: inline-flex;
+    margin-top: 0;
+    vertical-align: top;
+
+    .o-upload-list-item-card {
+        position: relative;
+        width: 104px;
+        height: 104px;
+        padding: $space-100;
+        border: 1px solid $neutral-200;
+        border-radius: $border-radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: #fff;
+
+        .o-upload-thumb {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img { width: 100%; height: 100%; object-fit: cover; }
+        }
+
+        /* Khung phủ màu đen mờ khi Hover chứng từ ảnh của Odoo */
+        .o-upload-actions-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 2;
+
+            .o-upload-action-icon {
+                color: #ffffff;
+                font-size: 16px;
+                cursor: pointer;
+                padding: $space-100;
+                &:hover { color: $error-400; }
+            }
+        }
+
+        &:hover .o-upload-actions-overlay {
+            opacity: 1;
+        }
+
+        .o-upload-progress-mini {
+            position: absolute;
+            bottom: $space-200;
+            left: $space-200;
+            right: $space-200;
+            height: 4px;
+            background: $neutral-200;
+            border-radius: 2px;
+            overflow: hidden;
+            .o-upload-progress-bar { height: 100%; background: $primary-500; }
+        }
+    }
+}

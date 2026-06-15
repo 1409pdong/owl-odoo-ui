@@ -1,0 +1,184 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+/* ========================================================
+   CHUẨN ODOO ERP FORM UI
+======================================================== */
+.o-form {
+    color: $neutral-800;
+    font-family: $font-family-base;
+    font-size: $text-body-size;
+    width: 100%;
+    
+    &.o-form-disabled {
+        pointer-events: none;
+        opacity: 0.7;
+        
+        .o-input, .o-picker, select, textarea, button {
+            background-color: $neutral-100 !important;
+            color: $neutral-500 !important;
+            border-color: $neutral-300 !important;
+        }
+    }
+
+    /* ODOO GROUP GRID: Lưới 2 cột an toàn */
+    &.o-form-group {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: $space-600;
+        row-gap: 0;
+        
+        > .o-form-item {
+            flex-direction: row;
+            align-items: flex-start;
+
+            .o-wrap-label {
+                flex: 0 0 35%;
+                max-width: 250px;
+                padding-right: $space-300;
+                justify-content: flex-end;
+                text-align: right;
+            }
+            .o-cell { flex: 1 1 0; min-width: 0; }
+        }
+    }
+
+    &.o-form-inline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $space-400;
+    }
+
+    /* ========================================================
+       FORM VARIANTS (Tự động áp dụng xuống Input và Picker con)
+    ======================================================== */
+    &.o-form-variant-filled {
+        .o-input, .o-picker {
+            background-color: $neutral-100;
+            border-color: transparent;
+            &:focus, &.o-picker-focused { background-color: #ffffff; border-color: $primary-500; }
+        }
+    }
+    
+    &.o-form-variant-borderless {
+        .o-input, .o-picker {
+            background-color: transparent;
+            border-color: transparent;
+            &:focus, &.o-picker-focused { box-shadow: none; border-color: transparent; }
+        }
+    }
+
+    &.o-form-variant-underlined {
+        .o-input, .o-picker {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid $neutral-400;
+            border-radius: 0;
+            padding-left: 0; padding-right: 0;
+            &:focus, &.o-picker-focused { box-shadow: none; border-bottom: 2px solid $primary-500; }
+        }
+        
+        .o-picker .o-picker-input > input { padding-left: 0; padding-right: 0; }
+
+        &.o-form-disabled .o-input, &.o-form-disabled .o-picker {
+            border-bottom-style: dashed !important;
+            background-color: transparent !important;
+        }
+    }
+}
+
+.o-form-item {
+    display: flex;
+    margin-bottom: $space-400;
+    width: 100%;
+    align-items: flex-start; /* Giúp Textarea luôn đưa Label lên top */
+
+    /* HORIZONTAL LAYOUT */
+    &.o-form-item-horizontal {
+        flex-direction: row;
+
+        .o-wrap-label {
+            flex: 0 0 30%;
+            max-width: 200px;
+            padding-right: $space-300;
+            justify-content: flex-end;
+            text-align: right;
+        }
+        .o-cell { flex: 1 1 0; min-width: 0; }
+    }
+
+    /* VERTICAL LAYOUT */
+    &.o-form-item-vertical {
+        flex-direction: column;
+        .o-wrap-label { margin-bottom: $space-100; text-align: left; }
+        .o-cell { width: 100%; }
+    }
+
+    /* INLINE LAYOUT */
+    &.o-form-item-inline {
+        flex-direction: row;
+        align-items: center;
+        width: auto;
+        margin-bottom: 0;
+        .o-wrap-label { margin-right: $space-200; }
+    }
+
+    /* LABEL ALIGNMENT */
+    .o-wrap-label {
+        display: flex;
+        min-height: 32px; /* Chiều cao chuẩn của Input */
+        align-items: center; /* Căn giữa text Label với ô Input 32px */
+        
+        .o-form-label {
+            margin: 0; color: $neutral-700; font-weight: $weight-medium; line-height: 1.5;
+            &.o-form-label-required { font-weight: $weight-bold; color: $neutral-900; }
+        }
+    }
+
+    /* CELL ALIGNMENT */
+    .o-cell {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .o-cell-content {
+            display: flex;
+            align-items: center;
+            min-height: 32px; /* Đảm bảo Radio, Checkbox luôn cân bằng với Input */
+            width: 100%;
+            gap: $space-200;
+            > .o-input, > .o-picker { width: 100%; margin: 0; }
+        }
+    }
+
+    .o-form-help { color: $neutral-500; font-size: $text-caption-size; margin-top: 4px; line-height: 1.4; }
+    .o-form-error { color: $error-500; font-size: $text-caption-size; margin-top: 4px; font-weight: $weight-medium; line-height: 1.4; }
+
+    &.o-has-error {
+        .o-form-label { color: $error-600; }
+        .o-input, .o-picker { border-color: $error-500 !important; background-color: $error-50 !important; }
+    }
+}
+
+/* NATIVE INPUT UTILITIES */
+.o-input {
+    border: 1px solid $neutral-300;
+    border-radius: $border-radius;
+    padding: $space-100 $space-200;
+    font-family: inherit;
+    font-size: $text-body-size;
+    color: $neutral-800;
+    background-color: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    height: 32px; /* Chốt cứng chiều cao chuẩn */
+
+    &:focus { outline: none; border-color: $primary-500; box-shadow: 0 0 0 2px rgba(113, 75, 103, 0.1); }
+    &[disabled] { background-color: $neutral-100; color: $neutral-500; cursor: not-allowed; }
+}
+
+textarea.o-input {
+    height: auto;
+    min-height: 80px;
+    resize: vertical;
+}

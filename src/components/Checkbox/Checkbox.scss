@@ -1,0 +1,154 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-checkbox-wrapper {
+    display: inline-flex;
+    align-items: baseline;
+    cursor: pointer;
+    font-family: $font-family-base;
+    font-size: $text-body-size;
+    color: $neutral-800;
+    margin-right: $space-400; /* Khoảng cách giữa các Checkbox kề nhau */
+    line-height: 1.5;
+    transition: all 0.2s;
+
+    &:hover .o-checkbox-inner {
+        border-color: $primary-500;
+    }
+
+    &.o-checkbox-wrapper-disabled {
+        cursor: not-allowed;
+        color: $neutral-400;
+        &:hover .o-checkbox-inner {
+            border-color: $neutral-200;
+        }
+    }
+
+    .o-checkbox-text {
+        padding-left: $space-200;
+        padding-right: $space-200;
+    }
+}
+
+.o-checkbox {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: middle;
+    outline: none;
+    line-height: 1;
+    top: 2px; /* Tinh chỉnh quang học (Optical Alignment) cho cân bằng với Text */
+}
+
+/* Ẩn thẻ input gốc đi nhưng vẫn giữ để bắt sự kiện Native */
+.o-checkbox-input {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+}
+
+/* Khối hộp ảo đại diện cho Checkbox */
+.o-checkbox-inner {
+    position: relative;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-color: #ffffff;
+    border: 1px solid $neutral-300;
+    border-radius: 4px;
+    transition: all 0.2s;
+
+    /* Nét vẽ dấu Check */
+    &::after {
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 25%;
+        display: table;
+        width: 5px;
+        height: 10px;
+        border: 2px solid #fff;
+        border-top: 0;
+        border-left: 0;
+        transform: rotate(45deg) scale(0) translate(-50%, -50%);
+        opacity: 0;
+        transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+        content: "";
+    }
+}
+
+/* Trạng thái được Tick (Checked) */
+.o-checkbox-checked {
+    .o-checkbox-inner {
+        background-color: $primary-500;
+        border-color: $primary-500;
+
+        &::after {
+            transform: rotate(45deg) scale(1) translate(-50%, -50%);
+            opacity: 1;
+            transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+        }
+    }
+}
+
+/* Trạng thái bán Tick (Indeterminate) - Nút Check all */
+.o-checkbox-indeterminate {
+    .o-checkbox-inner {
+        background-color: #ffffff;
+        border-color: $neutral-300;
+
+        &::after {
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background-color: $primary-500;
+            border: 0;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            content: "";
+            border-radius: 2px;
+        }
+    }
+}
+
+/* Trạng thái khóa (Disabled) */
+.o-checkbox-disabled {
+    .o-checkbox-input { cursor: not-allowed; }
+    
+    .o-checkbox-inner {
+        background-color: $neutral-100;
+        border-color: $neutral-200;
+
+        &::after {
+            border-color: $neutral-400;
+        }
+    }
+    
+    &.o-checkbox-checked .o-checkbox-inner {
+        background-color: $neutral-100;
+        &::after {
+            border-color: $neutral-400;
+        }
+    }
+
+    &.o-checkbox-indeterminate .o-checkbox-inner::after {
+        background-color: $neutral-400;
+    }
+}
+
+/* Checkbox Group Layouts */
+.o-checkbox-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: $space-200;
+    
+    &.o-checkbox-group-vertical {
+        flex-direction: column;
+    }
+}

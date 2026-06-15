@@ -1,0 +1,416 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+.o-steps {
+    display: flex;
+    width: 100%;
+    font-family: $font-family-base;
+    font-size: $text-body-size;
+    line-height: 1.5;
+
+    /* =========================================
+       1. DEFAULT STYLES (Ngang)
+       ========================================= */
+    &.o-steps-default:not(.o-steps-vertical) {
+        .o-step-item {
+            display: flex;
+            flex: 1;
+            align-items: flex-start;
+            &:last-child { flex: none; }
+        }
+
+        .o-step-icon {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #ffffff;
+            border: 1px solid $neutral-300;
+            border-radius: 50%;
+            font-size: 14px;
+            color: $neutral-500;
+            transition: all 0.3s;
+        }
+
+        .o-step-content {
+            display: flex;
+            flex-direction: column;
+            padding-left: $space-200;
+            padding-right: $space-200;
+            margin-top: 5px; 
+        }
+
+        .o-step-tail {
+            flex: 1; 
+            height: 1px;
+            background: $neutral-200;
+            margin-top: 16px; 
+            margin-right: $space-200;
+            transition: background 0.3s;
+        }
+    }
+
+    /* Small Size for Horizontal Default */
+    &.o-steps-small:not(.o-steps-vertical) {
+        .o-step-icon { width: 24px; height: 24px; font-size: 12px; }
+        .o-step-tail { margin-top: 12px; }
+        .o-step-content { margin-top: 2px; }
+        .o-step-title { font-size: $text-caption-size; }
+    }
+
+    /* =========================================
+       2. DOT STYLE (Dạng chấm)
+       ========================================= */
+    &.o-steps-dot:not(.o-steps-vertical) {
+        .o-step-item {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .o-step-icon {
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+            width: 8px;
+            height: 8px;
+            background: $neutral-300;
+            border-radius: 50%;
+            margin-top: 6px;
+            margin-bottom: $space-200;
+            border: none;
+        }
+
+        .o-step-tail {
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            width: 100%;
+            padding: 0 $space-400; 
+            &::after {
+                content: '';
+                display: block;
+                height: 1px;
+                width: 100%;
+                background: $neutral-200;
+                transition: background 0.3s;
+            }
+        }
+
+        .o-step-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 0 $space-200;
+        }
+    }
+
+    /* =========================================
+       3. VERTICAL MODE (Trục dọc)
+       ========================================= */
+    &.o-steps-vertical {
+        flex-direction: column;
+
+        .o-step-item {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            margin-bottom: $space-400;
+            &:last-child { margin-bottom: 0; }
+        }
+
+        .o-step-icon {
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 1px solid $neutral-300;
+            border-radius: 50%;
+            color: $neutral-500;
+            transition: all 0.3s;
+        }
+
+        .o-step-content {
+            display: flex;
+            flex-direction: column;
+            padding-left: $space-300;
+            padding-bottom: $space-200;
+        }
+
+        &.o-steps-default {
+            .o-step-icon { width: 32px; height: 32px; font-size: 14px; }
+            .o-step-content { margin-top: 5px; }
+            .o-step-tail {
+                position: absolute;
+                top: 32px; 
+                left: 15px; 
+                width: 1px;
+                height: calc(100% - 32px + 16px); 
+                background: $neutral-200;
+            }
+        }
+
+        &.o-steps-small {
+            .o-step-icon { width: 24px; height: 24px; font-size: 12px; }
+            .o-step-content { margin-top: 2px; }
+            .o-step-tail {
+                position: absolute;
+                top: 24px;
+                left: 11px; 
+                width: 1px;
+                height: calc(100% - 24px + 16px);
+                background: $neutral-200;
+            }
+        }
+
+        &.o-steps-dot {
+            .o-step-icon {
+                width: 8px; height: 8px; background: $neutral-300; border: none;
+                margin-top: 8px;
+            }
+            .o-step-content { margin-top: 0; }
+            .o-step-tail {
+                position: absolute;
+                top: 16px;
+                left: 3px; 
+                width: 1px;
+                height: calc(100% - 16px + 16px);
+                background: $neutral-200;
+            }
+        }
+    }
+
+    /* =========================================
+       4. PANEL MODE (Dạng khối thẻ)
+       ========================================= */
+    &.o-steps-panel {
+        display: flex;
+        border: 1px solid $neutral-200;
+        border-radius: $border-radius;
+        overflow: hidden;
+        background-color: $neutral-50;
+
+        .o-step-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: $space-300 $space-400;
+            border-right: 1px solid $neutral-200;
+            transition: background 0.3s;
+            position: relative;
+
+            &:last-child { border-right: none; }
+
+            .o-step-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+                border-radius: 50%;
+                margin-right: $space-200;
+                background: transparent;
+                border: 1px solid $neutral-400;
+                color: $neutral-500;
+                transition: all 0.3s;
+            }
+
+            .o-step-content {
+                display: flex;
+                flex-direction: column;
+                
+                .o-step-title {
+                    margin-bottom: 0;
+                    font-size: $text-body-size;
+                    color: $neutral-600;
+                    transition: color 0.3s;
+                }
+                .o-step-subtitle, .o-step-description {
+                    display: none; 
+                }
+            }
+
+            &:hover:not(.o-step-item-disabled) {
+                background-color: $neutral-100;
+            }
+        }
+
+        .o-step-item-finish {
+            background-color: #ffffff;
+            &:hover:not(.o-step-item-disabled) { background-color: #ffffff; }
+        }
+
+        .o-step-item-process {
+            background-color: #ffffff;
+            &:hover:not(.o-step-item-disabled) { background-color: #ffffff; }
+        }
+
+        .o-step-item-error {
+            background-color: $error-50;
+        }
+    }
+
+    /* =========================================
+       5. TRẠNG THÁI MÀU SẮC (ÉP GHI ĐÈ BẰNG !IMPORTANT)
+       ========================================= */
+    .o-step-item {
+        .o-step-title {
+            font-weight: $weight-semibold;
+            color: $neutral-600;
+            line-height: 1.2;
+            margin-bottom: $space-100;
+            display: flex;
+            align-items: center;
+            gap: $space-200;
+            white-space: nowrap; 
+        }
+        .o-step-subtitle {
+            font-size: $text-caption-size;
+            font-weight: $weight-regular;
+            color: $neutral-500;
+        }
+        .o-step-description {
+            font-size: $text-caption-size;
+            color: $neutral-500;
+            margin-top: $space-100;
+        }
+    }
+
+    /* Đã Hoàn Thành (Màu Primary Odoo - Tím/Xanh) */
+    .o-step-item.o-step-item-finish {
+        .o-step-icon { 
+            background-color: #ffffff !important; 
+            border-color: $primary-500 !important; 
+            color: $primary-500 !important; 
+        }
+        .o-step-tail { background-color: $primary-500 !important; }
+        .o-step-tail::after { background-color: $primary-500 !important; } 
+        .o-step-title { color: $neutral-800 !important; }
+        
+        &.o-step-item-dot .o-step-icon { background-color: $primary-500 !important; border: none !important; }
+    }
+
+    /* Đang Xử Lý (Hiện Tại) */
+    .o-step-item.o-step-item-process {
+        .o-step-icon { 
+            background-color: $primary-500 !important; 
+            border-color: $primary-500 !important; 
+            color: #ffffff !important; 
+        }
+        .o-step-title { color: $primary-600 !important; font-weight: $weight-bold !important; }
+        
+        &.o-step-item-dot .o-step-icon { 
+            background-color: $primary-500 !important; 
+            width: 12px !important; 
+            height: 12px !important; 
+            margin-top: 4px !important;
+            box-shadow: 0 0 0 3px $primary-100 !important;
+            left: -2px !important; 
+            border: none !important;
+        }
+    }
+
+    /* Đang Chờ (Tương Lai) */
+    .o-step-item.o-step-item-wait {
+        .o-step-icon { 
+            background-color: #ffffff !important;
+            border-color: $neutral-300 !important; 
+            color: $neutral-400 !important; 
+        }
+        .o-step-title { color: $neutral-500 !important; font-weight: $weight-regular !important; }
+    }
+
+    /* Lỗi */
+    .o-step-item.o-step-item-error {
+        .o-step-icon { 
+            background-color: #ffffff !important; 
+            border-color: $error-500 !important; 
+            color: $error-500 !important; 
+        }
+        .o-step-tail { background-color: $error-500 !important; }
+        .o-step-tail::after { background-color: $error-500 !important; }
+        .o-step-title { color: $error-500 !important; }
+        
+        &.o-step-item-dot .o-step-icon { background-color: $error-500 !important; border: none !important;}
+    }
+
+    /* =========================================
+       6. NAVIGATION MODE (ODOO STATUSBAR)
+       ========================================= */
+    &.o-steps-navigation {
+        display: inline-flex;
+        background-color: $neutral-300; 
+        align-items: stretch;
+        flex-wrap: nowrap;
+        border-radius: 4px;
+        border: 1px solid $neutral-300; 
+        
+        .o-step-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            color: $neutral-600;
+            padding: 8px 16px 8px 24px;
+            font-size: 12px;
+            font-weight: $weight-semibold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+            margin-left: -11px; 
+            white-space: nowrap;
+
+            &:first-child {
+                padding-left: 16px;
+                clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+                margin-left: 0;
+            }
+
+            &:last-child {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%);
+                padding-right: 16px;
+            }
+
+            &:first-child:last-child { clip-path: none; }
+
+            &:hover:not(.o-step-item-disabled) {
+                background-color: $neutral-100;
+                color: $neutral-900;
+            }
+
+            &.o-step-item-process {
+                background-color: $primary-500;
+                color: #ffffff;
+            }
+
+            &.o-step-item-finish {
+                background-color: #ffffff;
+                color: $neutral-900;
+            }
+
+            &.o-step-item-wait {
+                background-color: $neutral-100;
+                color: $neutral-500;
+            }
+            
+            &.o-step-item-disabled {
+                cursor: not-allowed;
+                opacity: 0.7;
+            }
+        }
+    }
+}

@@ -1,0 +1,135 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+/* ========================================================
+   COLLAPSE WRAPPER (Khung bọc ngoài)
+======================================================== */
+.o-collapse {
+    background-color: $neutral-50;
+    border: 1px solid $neutral-300;
+    border-radius: $border-radius;
+    font-family: $font-family-base;
+    font-size: $text-body-size;
+    color: $neutral-800;
+    box-sizing: border-box;
+    width: 100%;
+
+    /* Xóa border đáy của panel cuối cùng để bo góc mượt */
+    > .o-collapse-panel:last-child {
+        border-bottom: none;
+        border-radius: 0 0 $border-radius $border-radius;
+        
+        > .o-collapse-header {
+            border-radius: 0 0 $border-radius $border-radius;
+        }
+        &.o-collapse-panel-active > .o-collapse-header {
+            border-radius: 0;
+        }
+        > .o-collapse-content {
+            border-radius: 0 0 $border-radius $border-radius;
+        }
+    }
+
+    > .o-collapse-panel:first-child {
+        > .o-collapse-header {
+            border-radius: $border-radius $border-radius 0 0;
+        }
+    }
+
+    /* --- VARIANTS --- */
+    &.o-collapse-borderless {
+        background-color: #ffffff;
+        border: none;
+        
+        > .o-collapse-panel {
+            border-bottom: 1px solid $neutral-200;
+            > .o-collapse-header { background-color: #ffffff; }
+        }
+    }
+
+    &.o-collapse-ghost {
+        background-color: transparent;
+        border: none;
+
+        > .o-collapse-panel {
+            border-bottom: none;
+            > .o-collapse-content {
+                background-color: transparent;
+                border-top: none;
+            }
+        }
+    }
+}
+
+/* ========================================================
+   COLLAPSE PANEL (Từng khối nội dung)
+======================================================== */
+.o-collapse-panel {
+    border-bottom: 1px solid $neutral-300;
+
+    .o-collapse-header {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        padding: $space-300 $space-400;
+        color: $neutral-800;
+        font-weight: $weight-medium;
+        line-height: 1.5;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex-wrap: nowrap;
+
+        .o-collapse-expand-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: $space-300;
+            margin-top: 2px; /* Căn chỉnh quang học với text */
+            color: $neutral-500;
+            
+            i { transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        }
+
+        .o-collapse-header-text {
+            flex: 1;
+            min-width: 0;
+            word-wrap: break-word;
+        }
+
+        .o-collapse-extra {
+            margin-left: auto;
+            padding-left: $space-300;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    /* Trạng thái Active (Mở) */
+    &.o-collapse-panel-active {
+        > .o-collapse-header .o-collapse-expand-icon i {
+            transform: rotate(90deg); /* Xoay mũi tên */
+            color: $neutral-800;
+        }
+    }
+
+    /* Trạng thái Disabled (Khóa) */
+    &.o-collapse-panel-disabled {
+        > .o-collapse-header {
+            color: $neutral-400;
+            cursor: not-allowed;
+            .o-collapse-expand-icon { color: $neutral-300; }
+        }
+    }
+
+    .o-collapse-content {
+        background-color: #ffffff;
+        border-top: 1px solid $neutral-300;
+        
+        .o-collapse-content-box {
+            padding: $space-300 $space-400;
+            color: $neutral-700;
+            line-height: 1.5;
+        }
+    }
+}

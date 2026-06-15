@@ -1,0 +1,212 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+/* ========================================================
+   CORE ODOO SELECT WRAPPER
+======================================================== */
+.o-select {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid $neutral-300;
+    border-radius: $border-radius;
+    transition: all 0.2s;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover:not(.o-select-disabled) { border-color: $primary-500; }
+    
+    &.o-select-focused {
+        border-color: $primary-500;
+        box-shadow: 0 0 0 2px rgba(113, 75, 103, 0.1); /* Màu bóng mờ Odoo */
+    }
+
+    &.o-select-disabled {
+        background-color: $neutral-100;
+        color: $neutral-400;
+        cursor: not-allowed;
+        .o-select-selection-item { color: $neutral-400; }
+        .o-select-search-input { cursor: not-allowed; }
+    }
+
+    /* --- VALIDATION STATUS --- */
+    &.o-select-status-error {
+        border-color: $error-500;
+        &.o-select-focused { box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1); }
+    }
+    &.o-select-status-warning {
+        border-color: $warning-500;
+        &.o-select-focused { box-shadow: 0 0 0 2px rgba(240, 173, 78, 0.1); }
+    }
+
+    /* --- SIZES --- */
+    &.o-select-small { min-height: 24px; font-size: $text-caption-size; padding: 0 $space-100; }
+    &.o-select-medium { min-height: 32px; font-size: $text-body-size; padding: 0 $space-200; }
+    &.o-select-large { min-height: 40px; font-size: $text-title-size; padding: 0 $space-300; }
+
+    /* --- VARIANTS INTERACTION --- */
+    &.o-select-variant-filled {
+        background-color: $neutral-100; border-color: transparent;
+        &:hover:not(.o-select-disabled) { background-color: $neutral-200; }
+        &.o-select-focused { background-color: #ffffff; border-color: $primary-500; }
+    }
+    &.o-select-variant-borderless {
+        background-color: transparent; border-color: transparent; padding-left: 0; padding-right: 0;
+        &:focus-within { box-shadow: none; border-color: transparent; }
+    }
+    &.o-select-variant-underlined {
+        background-color: transparent; border: none; border-bottom: 1px solid $neutral-400; border-radius: 0; padding-left: 0; padding-right: 0;
+        &:hover:not(.o-select-disabled) { border-bottom-color: $primary-500; }
+        &.o-select-focused { box-shadow: none; border-bottom: 2px solid $primary-500; }
+        &.o-select-disabled { border-bottom-style: dashed; }
+    }
+
+    /* --- SELECTION AREA --- */
+    .o-select-selector {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        flex: 1;
+        min-width: 0;
+        gap: 4px;
+        padding: 4px 0;
+    }
+
+    .o-select-placeholder {
+        color: $neutral-400;
+        user-select: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .o-select-selection-item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: $neutral-800;
+    }
+
+    /* --- MULTIPLE TAG CHIPS (Chuẩn o_field_many2many_tags của Odoo) --- */
+    .o-select-tag {
+        display: inline-flex;
+        align-items: center;
+        background-color: $neutral-100;
+        border: 1px solid $neutral-200;
+        border-radius: 3px;
+        padding: 0 $space-100;
+        height: 22px;
+        font-size: 13px;
+        color: $neutral-700;
+        max-width: 100%;
+        box-sizing: border-box;
+
+        .o-select-tag-content {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .o-select-tag-close {
+            margin-left: $space-100;
+            color: $neutral-400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 10px;
+            &:hover { color: $error-500; }
+        }
+    }
+
+    .o-select-search-input {
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        max-width: 100%;
+        flex: 1;
+        min-width: 12px;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+    /* --- ICONS CONTROLS --- */
+    .o-select-arrow, .o-select-clear {
+        flex: none;
+        margin-left: $space-100;
+        color: $neutral-400;
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+    }
+
+    .o-select-clear {
+        display: none;
+        background-color: #ffffff;
+        cursor: pointer;
+        &:hover { color: $neutral-600; }
+    }
+
+    &:hover .o-select-clear.show {
+        display: flex;
+        + .o-select-arrow { display: none; }
+    }
+}
+
+/* ========================================================
+   DROPDOWN OPTIONS MENU PANEL
+======================================================== */
+.o-select-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    background-color: #ffffff;
+    border-radius: $border-radius;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12);
+    max-height: 250px;
+    overflow-y: auto;
+    padding: $space-100 0;
+    box-sizing: border-box;
+
+    .o-select-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $space-100 $space-300;
+        color: $neutral-700;
+        font-size: 14px;
+        line-height: 1.5;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+            background-color: $neutral-50;
+        }
+
+        &.o-select-item-selected {
+            background-color: $primary-50;
+            color: $primary-600;
+            font-weight: $weight-semibold;
+        }
+
+        &.o-select-item-disabled {
+            color: $neutral-300;
+            background-color: transparent;
+            cursor: not-allowed;
+        }
+    }
+
+    .o-select-dropdown-empty {
+        padding: $space-300;
+        color: $neutral-400;
+        text-align: center;
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,149 @@
+@import "../../scss/semantic";
+@import "../../scss/tokens/typography";
+@import "../../scss/tokens/spacing";
+
+/* ========================================================
+   TREE SELECT WRAPPER (Kế thừa khung của Select)
+======================================================== */
+.o-tree-select {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid $neutral-300;
+    border-radius: $border-radius;
+    transition: all 0.2s;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover:not(.o-select-disabled) { border-color: $primary-500; }
+    
+    &.o-select-focused {
+        border-color: $primary-500;
+        box-shadow: 0 0 0 2px rgba(113, 75, 103, 0.1);
+    }
+
+    &.o-select-disabled {
+        background-color: $neutral-100;
+        color: $neutral-400;
+        cursor: not-allowed;
+    }
+
+    /* --- SIZES & VARIANTS --- */
+    &.o-select-small { min-height: 24px; font-size: $text-caption-size; padding: 0 $space-100; }
+    &.o-select-medium { min-height: 32px; font-size: $text-body-size; padding: 0 $space-200; }
+    &.o-select-large { min-height: 40px; font-size: $text-title-size; padding: 0 $space-300; }
+
+    &.o-select-variant-filled {
+        background-color: $neutral-100; border-color: transparent;
+        &.o-select-focused { background-color: #ffffff; border-color: $primary-500; }
+    }
+    &.o-select-variant-borderless {
+        background-color: transparent; border-color: transparent; padding: 0;
+        &:focus-within { box-shadow: none; border-color: transparent; }
+    }
+    &.o-select-variant-underlined {
+        background-color: transparent; border: none; border-bottom: 1px solid $neutral-400; border-radius: 0; padding: 0;
+        &.o-select-focused { box-shadow: none; border-bottom: 2px solid $primary-500; }
+    }
+
+    .o-select-selector {
+        position: relative; /* BUG FIX: Neo ô absolute input */
+        display: flex; flex-wrap: wrap; align-items: center; flex: 1; min-width: 0; gap: 4px; padding: 4px 0;
+    }
+
+    .o-select-placeholder { color: $neutral-400; user-select: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    
+    .o-select-selection-item { 
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: $neutral-800; 
+        max-width: 100%; transition: opacity 0.2s;
+    }
+
+    /* M2M TAGS */
+    .o-select-tag {
+        display: inline-flex; align-items: center; background-color: $neutral-100; border: 1px solid $neutral-200;
+        border-radius: 3px; padding: 0 $space-100; height: 22px; font-size: 13px; color: $neutral-700;
+        max-width: 100%; box-sizing: border-box;
+        .o-select-tag-content { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .o-select-tag-close { margin-left: $space-100; color: $neutral-400; cursor: pointer; &:hover { color: $error-500; } }
+    }
+
+    /* Ô INPUT SEARCH */
+    .o-select-search-input {
+        border: none; outline: none; background: transparent; padding: 0; margin: 0; max-width: 100%; flex: 1; min-width: 12px; font-family: inherit; font-size: inherit;
+        
+        &.o-select-search-single {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%;
+        }
+        &.o-select-search-hidden { opacity: 0; pointer-events: none; }
+    }
+
+    .o-select-arrow, .o-select-clear { flex: none; margin-left: $space-100; color: $neutral-400; display: flex; align-items: center; font-size: 12px; }
+    
+    /* NÚT CLEAR */
+    .o-select-clear { 
+        display: none; background-color: transparent; cursor: pointer; /* BUG FIX: Nền trong suốt */
+        &:hover { color: $neutral-600; } 
+    }
+    &:hover .o-select-clear.show { display: flex; + .o-select-arrow { display: none; } }
+}
+
+/* ========================================================
+   TREE DROPDOWN PANEL & TREE NODE
+======================================================== */
+.o-tree-select-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0; right: 0;
+    z-index: 1050;
+    background-color: #ffffff;
+    border-radius: $border-radius;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12);
+    max-height: 300px;
+    overflow-y: auto;
+    padding: $space-100 0;
+    box-sizing: border-box;
+
+    .o-tree-node-content {
+        display: flex;
+        align-items: center;
+        padding: 4px $space-200;
+        cursor: pointer;
+        transition: background 0.2s;
+        
+        &:hover { background-color: $neutral-50; }
+
+        .o-tree-switcher {
+            width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center;
+            color: $neutral-500; font-size: 14px; flex-shrink: 0; cursor: pointer;
+            &:hover { color: $neutral-800; }
+        }
+
+        .o-tree-checkbox {
+            margin-right: $space-100; display: inline-flex; align-items: center; cursor: pointer;
+            
+            .o-checkbox-inner {
+                width: 16px; height: 16px; border: 1px solid $neutral-300; border-radius: 4px; position: relative; background: #fff;
+                transition: all 0.2s;
+                &.checked {
+                    background-color: $primary-500; border-color: $primary-500;
+                    &::after {
+                        content: ''; position: absolute; top: 1px; left: 4px; width: 5px; height: 9px;
+                        border: 2px solid #fff; border-top: 0; border-left: 0; transform: rotate(45deg);
+                    }
+                }
+            }
+        }
+
+        .o-tree-title {
+            flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            color: $neutral-700; padding: 2px 4px; border-radius: 4px;
+            &.selected { background-color: $primary-50; color: $primary-600; font-weight: $weight-semibold; }
+            &.disabled { color: $neutral-300; cursor: not-allowed; }
+            .highlight { color: $error-500; font-weight: $weight-bold; }
+        }
+    }
+
+    .o-tree-empty { padding: $space-300; color: $neutral-400; text-align: center; font-size: 13px; }
+}
