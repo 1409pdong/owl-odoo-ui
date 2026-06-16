@@ -20,10 +20,11 @@ import { TreeSelectDoc } from "./views/TreeSelectDoc.js";
 import {TableDoc} from "./views/TableDoc.js";
 import { CollapseDoc } from "./views/CollapseDoc.js";
 import { UploadDoc } from "./views/UploadDoc.js";
+import { BadgeDoc } from "./views/BadgeDoc.js";
 
 export class Showcase extends Component {
     // Đăng ký toàn bộ danh sách sub-pages vào OWL
-    static components = { ColorDoc, TypographyDoc, SpacingDoc, ButtonDoc, FloatButtonDoc, AnchorDoc, BreadcrumbDoc, DropdownDoc, MenuDoc, StepsDoc, TabsDoc, CheckboxDoc, DatePickerDoc, FormDoc, InputDoc, RadioDoc, SelectDoc, TreeSelectDoc, TableDoc, CollapseDoc, UploadDoc };
+    static components = { ColorDoc, TypographyDoc, SpacingDoc, ButtonDoc, FloatButtonDoc, AnchorDoc, BreadcrumbDoc, DropdownDoc, MenuDoc, StepsDoc, TabsDoc, CheckboxDoc, DatePickerDoc, FormDoc, InputDoc, RadioDoc, SelectDoc, TreeSelectDoc, TableDoc, CollapseDoc, UploadDoc, BadgeDoc };
 
     setup() {
         // Mặc định ban đầu khi mở web lên sẽ ở trang Color
@@ -240,6 +241,15 @@ export class Showcase extends Component {
                         </a>
                     </li>
 
+                    <!--Badge-->
+                    <li class="nav-item mb-1">
+                        <a class="nav-link cursor-pointer rounded py-2 small" 
+                        t-att-class="state.activePage === 'atom-badge' ? 'active bg-light text-primary fw-bold' : 'text-dark'" 
+                        t-on-click="() => this.setPage('atom-badge')">
+                            Badge
+                        </a>
+                    </li>
+
                     <!--Other Components-->
                     <li class="nav-item">
                         <a class="nav-link text-muted py-2 small" href="#">Khác (Sắp ra mắt)</a>
@@ -333,6 +343,10 @@ export class Showcase extends Component {
 
                     <t t-if="state.activePage === 'atom-upload'">
                         <UploadDoc />
+                    </t>
+
+                    <t t-if="state.activePage === 'atom-badge'">
+                        <BadgeDoc />
                     </t>
 
                 </div>
